@@ -37,8 +37,15 @@ function setPixel(x, y, color, framebuffer) {
 	// Round coordinates to handle float values. Uses default rounding mode.
 	[x, y] = roundCoordinates(x, y);
 
-	// Clamp coordinates to the bounds of the canvas.
-	[x, y] = clampCoordinates(x, y, framebuffer.width, framebuffer.height);
+	if (COORDINATE_CLAMPING) {
+		// Clamp coordinates to the bounds of the canvas.
+		[x, y] = clampCoordinates(x, y, framebuffer.width, framebuffer.height);
+	}
+
+	// Discard coordinates outside the canvas bounds.
+	if (shouldDiscardCoordinates(x, y, framebuffer.width, framebuffer.height)) {
+		return
+	}
 
 	// EXERCISE 1 END
 
@@ -109,6 +116,18 @@ function clampCoordinates(x, y, width, height) {
 }
 
 /**
+ * Checks if the coordinates are outside the bounds of an area (i.e. the canvas)
+ * and should be discarded.
+ * @param x
+ * @param y
+ * @param width
+ * @param height
+ */
+function shouldDiscardCoordinates(x, y, width, height) {
+	return x < 0 || x >= width || y < 0 || y >= height
+}
+
+/**
  * Returns the size of the canvas in pixels adjusted by the zoom factor.
  * @returns {number[]}
  */
@@ -150,7 +169,8 @@ function testDrawCoordinatesWithinCanvas(framebuffer) {
 
 /**
  * Tests drawing pixels outside the canvas.
- * Expects the pixels to be clamped to the bounds of the canvas.
+ * Expects the pixels to be clamped to the bounds of the canvas if
+ * COORDINATE_CLAMPING is enabled. If not, the pixels will be discarded.
  * @param framebuffer The framebuffer to draw on.
  */
 function testDrawCoordinatesOutsideCanvas(framebuffer) {
@@ -234,6 +254,7 @@ const CANVAS_WIDTH = 600
 const CANVAS_HEIGHT = 400
 const CANVAS_PIXELSIZE = 5
 const COORDINATE_ROUNDING = 'round' // 'round', 'floor', 'ceil', 'trunc'
+const COORDINATE_CLAMPING = true
 
 // get and customize our canvas 
 let canvas = document.getElementById('canvas')
