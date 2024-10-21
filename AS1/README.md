@@ -1,4 +1,7 @@
 # Aufgabe S1
+Implementieren Sie die setPixel-Funktionalität. Überprüfen Sie
+ihre Implementierung, indem Sie Edge Cases von Pixelkoordinaten
+testen.
 
 ```
 // start http server, for example with python
