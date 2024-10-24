@@ -70,20 +70,20 @@ function setPixel(x, y, color, framebuffer) {
 }
 
 /**
- * Draws a line from the coordinates (x0, y0) to (x1, y1) with the specified color.
- * @param x0
- * @param y0
- * @param x1
- * @param y1
+ * Draws a line from the coordinates (startX, startY) to (endX, endY) with the specified color.
+ * @param startX
+ * @param startY
+ * @param endX
+ * @param endY
  * @param color
  * @param framebuffer
  * @param algorythm
  */
-function drawLine(x0, y0, x1, y1, color, framebuffer, algorythm = LINE_ALGORITHM) {
+function drawLine(startX, startY, endX, endY, color, framebuffer, algorythm = LINE_ALGORITHM) {
 	if (algorythm === 'bresenham') {
-		drawLineBresenham(x0, y0, x1, y1, color, framebuffer)
+		drawLineBresenham(startX, startY, endX, endY, color, framebuffer)
 	} else if (algorythm === 'dda') {
-		drawLineDDA(x0, y0, x1, y1, color, framebuffer)
+		drawLineDDA(startX, startY, endX, endY, color, framebuffer)
 	}
 }
 
